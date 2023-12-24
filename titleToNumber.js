@@ -31,7 +31,8 @@ const titleToNumber = (columnTitle) => {
   let result = 0;
   let letterIndex = 0;
   for (let i = columnTitle.length - 1; i >= 0; i -= 1) {
-    result += length ** i * (alphabet.indexOf(columnTitle[letterIndex]) + 1);
+    const columnTitleLetterPosition = alphabet.indexOf(columnTitle[letterIndex]) + 1;
+    result += length ** i * columnTitleLetterPosition;
     letterIndex += 1;
   }
   return result;
