@@ -1,5 +1,6 @@
 // This file contains solution to the following problem:
 // https://leetcode.com/problems/excel-sheet-column-number/
+
 const titleToNumber = (columnTitle) => {
   const alphabet = [
     "A",
