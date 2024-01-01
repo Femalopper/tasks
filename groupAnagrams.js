@@ -1,5 +1,6 @@
 // This file contains solution to the following problem:
 // https://leetcode.com/problems/group-anagrams/
+
 const groupAnagrams = (strs) => {
   let strsArray = strs;
   const result = [];
