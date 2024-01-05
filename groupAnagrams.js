@@ -4,22 +4,22 @@
 const groupAnagrams = (strs) => {
   let strsArray = strs;
   const result = [];
-  for (let i = 0; i < strsArray.length; ) {
-    const grouppedAnagrams = [strsArray[i]];
-    for (let j = i + 1; j < strsArray.length; j += 1) {
-      if (strsArray[i].length !== strsArray[j].length) {
+  while (strsArray.length > 0) {
+    const grouppedAnagrams = [strsArray[0]]; // "eat"
+    for (let j = 1; j < strsArray.length; j += 1) {
+      if (strsArray[0].length !== strsArray[j].length) {
         continue;
       }
-      let letters = strsArray[j].split("");
-      let strsArrItem = strsArray[i].split("");
-      for (let k = 0; k < letters.length; ) {
+      let letters = strsArray[j].split(""); // t e a
+      let strsArrItem = strsArray[0].split(""); // e a t
+      while (letters.length > 0) {
         if (
-          strsArrItem.includes(letters[k]) &&
+          strsArrItem.includes(letters[0]) &&
           letters.length === strsArrItem.length
         ) {
-          const savedLetter = letters[k];
-          letters = letters.filter((letter) => letter !== savedLetter[k]);
-          strsArrItem = strsArrItem.filter((item) => item !== savedLetter[k]);
+          const savedLetter = letters[0];
+          letters = letters.filter((letter) => letter !== savedLetter[0]); // [e, a]
+          strsArrItem = strsArrItem.filter((item) => item !== savedLetter[0]); // [e, a]
         } else {
           break;
         }
