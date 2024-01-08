@@ -2,18 +2,18 @@
 // https://leetcode.com/problems/container-with-most-water/
 
 const maxArea = (height) => {
-  let pointer1 = 0;
-  let pointer2 = height.length - 1;
+  let leftPointer = 0;
+  let rightPointer = height.length - 1;
   let sum = Math.min.apply(null, height);
 
-  while (pointer1 < pointer2) {
+  while (leftPointer < rightPointer) {
     let curr;
-    if (height[pointer1] < height[pointer2]) {
-      curr = height[pointer1] * (pointer2 - pointer1);
-      pointer1 += 1;
+    if (height[leftPointer] < height[rightPointer]) {
+      curr = height[leftPointer] * (rightPointer - leftPointer);
+      leftPointer += 1;
     } else {
-      curr = height[pointer2] * (pointer2 - pointer1);
-      pointer2 -= 1;
+      curr = height[rightPointer] * (rightPointer - leftPointer);
+      rightPointer -= 1;
     }
     if (curr > sum) {
       sum = curr;
