@@ -5,26 +5,26 @@ const groupAnagrams = (strs) => {
   let strsArray = strs;
   const result = [];
   while (strsArray.length > 0) {
-    const grouppedAnagrams = [strsArray[0]]; // "eat"
+    const grouppedAnagrams = [strsArray[0]];
     for (let j = 1; j < strsArray.length; j += 1) {
       if (strsArray[0].length !== strsArray[j].length) {
         continue;
       }
-      let letters = strsArray[j].split(""); // t e a
-      let strsArrItem = strsArray[0].split(""); // e a t
+      let letters = strsArray[j].split('');
+      let firstWordLetters = strsArray[0].split('');
       while (letters.length > 0) {
         if (
-          strsArrItem.includes(letters[0]) &&
-          letters.length === strsArrItem.length
+          firstWordLetters.includes(letters[0]) &&
+          letters.length === firstWordLetters.length
         ) {
           const savedLetter = letters[0];
-          letters = letters.filter((letter) => letter !== savedLetter[0]); // [e, a]
-          strsArrItem = strsArrItem.filter((item) => item !== savedLetter[0]); // [e, a]
+          letters = letters.filter((letter) => letter !== savedLetter);
+          firstWordLetters = firstWordLetters.filter((letter) => letter !== savedLetter);
         } else {
           break;
         }
       }
-      if (letters.length === 0 && strsArrItem.length === 0) {
+      if (letters.length === 0 && firstWordLetters.length === 0) {
         grouppedAnagrams.push(strsArray[j]);
       }
     }
