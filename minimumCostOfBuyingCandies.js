@@ -3,18 +3,16 @@
 
 const minimumCost = (cost) => {
   const sortedPrices = cost.sort((a, b) => b - a);
-  const freeCandy = 3;
+  const freeCandyNumber = 3;
   let result = 0;
-  let counter = 0;
-  let temp = 0;
-  while (counter < sortedPrices.length) {
-    temp += 1;
-    if (temp !== freeCandy) {
-      result += sortedPrices[counter];
+  let candiesCounter = 0;
+  for (let i = 0; i < sortedPrices.length; i += 1) {
+    candiesCounter += 1;
+    if (candiesCounter !== freeCandyNumber) {
+      result += sortedPrices[i];
     } else {
-      temp = 0;
+      candiesCounter = 0;
     }
-    counter += 1;
   }
   return result;
 };
