@@ -1,42 +1,37 @@
 // This file contains solution to the following problem:
 // https://leetcode.com/problems/intersection-of-two-linked-lists/
 
-const getIntersectionNode = function (headA, headB) {
-  let depthA = 0;
-  let depthB = 0;
-  let h1 = headA;
-  let h2 = headB;
-  while (h1) {
-    depthA += 1;
-    h1 = h1.next;
+const getIntersectionNode = (headA, headB) => {
+  const countDepth = (head) => {
+    let depth = 0;
+    while (head) {
+      head = head.next;
+      depth += 1;
+    }
+    return depth;
   }
-  while (h2) {
-    depthB += 1;
-    h2 = h2.next;
-  }
-  let skip = 0;
+  const depthA = countDepth(headA);
+  const depthB = countDepth(headB);
+
   let skippedHead = headA;
-  let notSkippedHead = headB;
+  let otherHead = headB;
+  let skipCnt = depthA - depthB;
 
-  if (depthA > depthB) {
-    skip = depthA - depthB;
-  } else {
-    skip = depthB - depthA;
+  if (depthB > depthA) {
+    skipCnt = depthB - depthA;
     skippedHead = headB;
-    notSkippedHead = headA;
+    otherHead = headA;
   }
 
-  let counter = 0;
-  while (counter < skip) {
+  for (let i = 0; i < skipCnt; i += 1) {
     skippedHead = skippedHead.next;
-    counter += 1;
   }
 
-  while (skippedHead && notSkippedHead) {
-    if (skippedHead === notSkippedHead) {
+  while (skippedHead && otherHead) {
+    if (skippedHead === otherHead) {
       return skippedHead;
     }
     skippedHead = skippedHead.next;
-    notSkippedHead = notSkippedHead.next;
+    otherHead = otherHead.next;
   }
 };
