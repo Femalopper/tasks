@@ -2,29 +2,35 @@
 // https://leetcode.com/problems/top-k-frequent-elements/
 
 const topKFrequent = (nums, k) => {
-    const numsOccurences = {};
-    const occurencesNums = {};
-    for (let i = 0; i < nums.length; i += 1) {
-        if(!numsOccurences[nums[i]]) {
-            numsOccurences[nums[i]] = 1;
-        } else {
-            numsOccurences[nums[i]] += 1;
-        }
+  const numsOccurences = {};
+  for (let i = 0; i < nums.length; i += 1) {
+    if (!numsOccurences[nums[i]]) {
+      numsOccurences[nums[i]] = 1;
+    } else {
+      numsOccurences[nums[i]] += 1;
     }
-    for (let n in numsOccurences) {
-        if(!occurencesNums[numsOccurences[n]]) {
-            occurencesNums[numsOccurences[n]] = [n];
-        } else {
-            occurencesNums[numsOccurences[n]] = [...occurencesNums[numsOccurences[n]], n];
-        }
+  }
+  const sortedOccurances = [];
+  const numsOccurencesArr = Object.entries(numsOccurences);
+  for (let i = 0; i < numsOccurencesArr.length; i += 1) {
+    const element = numsOccurencesArr[i];
+    const occurence = element[1];
+    const num = +element[0];
+    if (!sortedOccurances[occurence]) {
+      sortedOccurances[occurence] = [];
     }
-    const values = Object.values(occurencesNums);
-    let result = [];
-    let count = values.length - 1;
-    for (let i = 0; i < k;) {
-      result = [...result, ...values[count]];
-      i = result.length;
-      count -= 1;
-    }
-    return result;
+    sortedOccurances[occurence].push(num);
+  }
+  const filteredSortedOccurances = sortedOccurances.filter(
+    (arr) => arr !== undefined
+  );
+  let result = [];
+  let last = filteredSortedOccurances.length - 1;
+  while (result.length < k) {
+    result = [...result, ...filteredSortedOccurances[last]];
+    last -= 1;
+  }
+  return result;
 };
+
+console.log(topKFrequent([5, 3, 1, 1, 1, 3, 73, 1], 2));
