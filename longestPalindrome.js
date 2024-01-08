@@ -2,26 +2,29 @@
 // https://leetcode.com/problems/longest-palindrome/
 
 const longestPalindrome = function (s) {
-  const hashMap = {};
-  for (let i = 0; i < s.length; i += 1) {
-    const element = s[i];
-    if (!hashMap[s[i]]) {
-      hashMap[element] = 1;
+  const lettersOccurances = {};
+  for (letter of s) {
+    if (!lettersOccurances[letter]) {
+      lettersOccurances[letter] = 1;
     } else {
-      hashMap[element] += 1;
+      lettersOccurances[letter] += 1;
     }
   }
-  const evenValues = Object.values(hashMap).filter((value) => value % 2 === 0);
-  const oddValues = Object.values(hashMap).filter((value) => value % 2 !== 0);
+  const evenOccurances = Object.values(lettersOccurances).filter((value) => value % 2 === 0);
+  const oddOccurances = Object.values(lettersOccurances).filter((value) => value % 2 !== 0);
+
+  // if string has at least one odd occurances there is always one letter in the mid of palindrome
   let sum = 1;
-  if (oddValues.length === 0) {
+  // if every string letter occurs even number of times just sum all even occurences
+  if (oddOccurances.length === 0) {
     sum = 0;
   }
-  for (let i = 0; i < oddValues.length; i += 1) {
-    sum += oddValues[i] - 1;
+  // if string letter has odd occurences make it even
+  for (oddVal of oddOccurances) {
+    sum += oddVal - 1;
   }
-  for (let i = 0; i < evenValues.length; i += 1) {
-    sum += evenValues[i];
+  for (evenVal of evenOccurances) {
+    sum += evenVal;
   }
   return sum;
 };
