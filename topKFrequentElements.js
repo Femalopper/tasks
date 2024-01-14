@@ -3,11 +3,11 @@
 
 const topKFrequent = (nums, k) => {
   const numsOccurences = {};
-  for (let i = 0; i < nums.length; i += 1) {
-    if (!numsOccurences[nums[i]]) {
-      numsOccurences[nums[i]] = 1;
+  for (num of nums) {
+    if (!numsOccurences[num]) {
+      numsOccurences[num] = 1;
     } else {
-      numsOccurences[nums[i]] += 1;
+      numsOccurences[num] += 1;
     }
   }
   const sortedOccurances = [];
