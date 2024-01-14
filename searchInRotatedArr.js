@@ -2,51 +2,40 @@
 // https://leetcode.com/problems/search-in-rotated-sorted-array/
 
 const search = function (nums, target) {
-  let pointer1 = 0;
-  let pointer2 = nums.length - 1;
-  if (nums[pointer1] === target) {
-    return pointer1;
+  let leftPointer = 0;
+  let rightPointer = nums.length - 1;
+  if (nums[leftPointer] === target) {
+    return leftPointer;
   }
-  if (nums[pointer2] === target) {
-    return pointer2;
-  }
-  let left = nums;
-  let right = [];
-  while (nums[pointer1] - nums[pointer2] > 0) {
-    pointer1 += 1;
-    pointer2 -= 1;
+  if (nums[rightPointer] === target) {
+    return rightPointer;
   }
 
-  if (nums[pointer1] > nums[pointer1 - 1] && nums[pointer1] < nums[pointer2]) {
-    pointer2 += 1;
-    left = nums.slice(0, pointer2);
-    right = nums.slice(pointer2);
-  }
-  if (
-    (nums[pointer1] < nums[pointer1 - 1] && nums[pointer1] < nums[pointer2]) ||
-    (pointer1 === pointer2 && nums[pointer1] < nums[pointer1 + 1])
-  ) {
-    left = nums.slice(0, pointer1);
-    right = nums.slice(pointer1);
-  }
-  if (pointer1 > pointer2) {
-    left = nums.slice(0, pointer1);
-    right = nums.slice(pointer2 + 1);
-  }
-  if (pointer1 === pointer2 && nums[pointer1] > nums[pointer1 + 1]) {
-    left = nums.slice(0, pointer1 + 1);
-    right = nums.slice(pointer1 + 1);
+  // find the possible end of the left array and the start of the right array
+  while (nums[leftPointer] - nums[rightPointer] > 0) {
+    leftPointer += 1;
+    rightPointer -= 1;
   }
 
-  const searchTarget = (arr) => {
+  let pivotIndex = 0;
+  // if the number under left pointer is more than the previous number
+  if (nums[leftPointer] > nums[leftPointer - 1]) {
+    pivotIndex = rightPointer + 1;
+  }
+  // if the number under left pointer is less than the previous number
+  if (nums[leftPointer] < nums[leftPointer - 1]) {
+    pivotIndex = leftPointer;
+  }
+
+  const searchTarget = (arr, targ) => {
     let low = 0;
     let high = arr.length - 1;
     while (low <= high) {
       const mid = Math.floor((low + high) / 2);
-      if (arr[mid] === target) {
+      if (arr[mid] === targ) {
         return mid;
       }
-      if (arr[mid] > target) {
+      if (arr[mid] > targ) {
         high = mid - 1;
       } else {
         low = mid + 1;
@@ -54,10 +43,12 @@ const search = function (nums, target) {
     }
     return -1;
   };
+  const left = nums.slice(0, pivotIndex);
+  const right = nums.slice(pivotIndex);
   if (target <= right[right.length - 1] && target >= right[0]) {
-    const foundElement = searchTarget(right);
+    const foundElement = searchTarget(right, target);
     if (foundElement < 0) return -1;
     return left.length + foundElement;
   }
-  return searchTarget(left);
+  return searchTarget(left, target);
 };
